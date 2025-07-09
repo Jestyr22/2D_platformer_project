@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /main/main.collectionc
+main_collection = /game/levels/level1.collectionc
 
 [script]
 shared_state = 1
@@ -17,4 +17,8 @@ scale_mode = stretch
 
 [project]
 title = 2D_platformer_project
+
+[graphics]
+default_texture_min_filter = nearest
+default_texture_mag_filter = nearest
 
