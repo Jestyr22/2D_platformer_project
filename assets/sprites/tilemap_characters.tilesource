@@ -1,10 +1,44 @@
-image: ""
-tile_width: 16
-tile_height: 16
+image: "/assets/sprites/tilemap_characters.png"
+tile_width: 24
+tile_height: 24
+tile_spacing: 1
 collision_groups: "default"
 animations {
   id: "anim"
   start_tile: 1
   end_tile: 1
+}
+animations {
+  id: "enemy_bat"
+  start_tile: 25
+  end_tile: 27
+  playback: PLAYBACK_LOOP_PINGPONG
+  fps: 8
+}
+animations {
+  id: "enemy_bot"
+  start_tile: 16
+  end_tile: 17
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 5
+}
+animations {
+  id: "player_idle"
+  start_tile: 5
+  end_tile: 5
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "player_jump"
+  start_tile: 6
+  end_tile: 6
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "player_move"
+  start_tile: 5
+  end_tile: 6
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
 }
 extrude_borders: 2
