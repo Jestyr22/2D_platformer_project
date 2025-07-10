@@ -34,9 +34,9 @@ height = 640
 high_dpi = 1
 samples = 0
 swap_interval = 1
-update_frequency = 0
+update_frequency = 60
 variable_dt = 0
-vsync = 1
+vsync = 0
 width = 960
 
 [engine]
@@ -151,7 +151,7 @@ ray_cast_limit_3d = 128
 scale = 1.0
 trigger_overlap_capacity = 16
 type = 2D
-use_fixed_timestep = 0
+use_fixed_timestep = 1
 velocity_threshold = 1.0
 world_count = 4
 

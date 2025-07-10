@@ -1,0 +1,135 @@
+--Variable Declarations
+local MOVE_SPEED = 100
+local GRAVITY = -500
+local MAX_FALL_SPEED = 500
+local JUMP_SPEED = 300
+local NORMAL_THRESHOLD = 0.8
+
+--Pre-Hash Declarations
+local MOVE_LEFT_INPUT = hash("move_left")
+local MOVE_RIGHT_INPUT = hash("move_right")
+local JUMP_INPUT = hash("move_jump")
+
+--Player Animations
+local IDLE_ANIM = hash("player_idle")
+local MOVE_ANIM = hash("player_move")
+local JUMP_ANIM = hash("player_jump")
+
+--On-Message Pre-Hash Declarations
+local CONTACT_POINT_RESPONSE = hash("contact_point_response")
+local GROUND_LAYER = hash("ground")
+
+--Functions
+function init(self)
+	print("player.init: Initializing")
+
+	msg.post(".", "acquire_input_focus")
+	print("Listening for inputs")
+	
+	msg.post("@render:", "use_camera_projection")
+
+	msg.post("@render:", "clear_color", {color = vmath.vector4(0.5, 0.8, 0.9, 1)})
+	
+	self.spawn_position = go.get_position()
+	self.velocity = vmath.vector3()
+	self.facing_direction = 1
+	self.correction = vmath.vector3()
+	self.ground_contact = true
+	self.anim = nil
+	self.score = 0
+	print("All self. variables declared")	
+end
+
+local function clamp(value, min, max)
+	--locks "value" to between min/max
+	if value < min then
+		return min
+	elseif value > max then
+		return max
+	else
+		return value
+	end
+end
+
+function fixed_update(self, dt)
+	--Gravity
+	self.velocity.y = self.velocity.y + GRAVITY * dt
+	self.velocity.y = clamp(self.velocity.y, -MAX_FALL_SPEED, MAX_FALL_SPEED)
+
+	--Movement
+	local pos = go.get_position()
+	pos = pos + self.velocity * dt
+	go.set_position(pos)
+
+	-- Reset state variables
+	self.correction = vmath.vector3()
+	self.ground_contact = false
+end
+
+local function handle_obstacle_contact(self, normal, distance)
+	--Stops player clipping *into* objects, instead stopping as it hits
+	--Position compensation
+	if distance > 0 then
+		local proj = vmath.project(self.correction, normal * distance)
+		if proj < 1 then
+			local comp = (distance - distance * proj) * normal
+			go.set_position(go.get_position() + comp)
+			self.correction = self.correction + comp
+		end
+	end
+	--Wall collision
+	if math.abs(normal.x) > NORMAL_THRESHOLD then
+		self.velocity.x = 0
+	end
+	
+	--Ground collision
+	if normal.y > NORMAL_THRESHOLD then
+		self.velocity.y = 0
+		self.ground_contact = true
+	end
+
+	--Ceiling collision
+	if normal.y < NORMAL_THRESHOLD then
+		self.velocity.y = 0
+	end
+	
+	
+end
+
+function on_message(self, message_id, message, sender)
+	--Handling collision with ground
+	if message_id == CONTACT_POINT_RESPONSE then
+		if message.group == GROUND_LAYER then
+			handle_obstacle_contact(self, message.normal, message.distance)
+		end
+	end
+end
+
+local function move(self, direction)
+	if direction ~= 0 then
+		self.facing_direction = direction
+	end
+	
+	self.velocity.x = MOVE_SPEED * direction
+end
+
+local function jump(self)
+	if self.ground_contact == false then
+		return
+	end
+	self.velocity.y = JUMP_SPEED
+	self.ground_contact = false
+	
+end
+
+function on_input(self, action_id, action)
+	if action_id == MOVE_LEFT_INPUT then
+		move(self, -action.value)
+	elseif action_id == MOVE_RIGHT_INPUT then
+		move(self, action.value)
+	end
+
+	if action_id == JUMP_INPUT then
+		jump(self)
+	end
+end

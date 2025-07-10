@@ -1,4 +1,12 @@
 name: "level1"
+instances {
+  id: "player"
+  prototype: "/game/player/player.go"
+  position {
+    x: 56.0
+    y: 466.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "level"
