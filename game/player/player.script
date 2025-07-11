@@ -19,6 +19,9 @@ local JUMP_ANIM = hash("player_jump")
 local CONTACT_POINT_RESPONSE = hash("contact_point_response")
 local GROUND_LAYER = hash("ground")
 
+--Debug Boolean
+local DEBUGGING = false
+
 --Functions
 function init(self)
 	print("player.init: Initializing")
@@ -27,6 +30,7 @@ function init(self)
 	print("Listening for inputs")
 	
 	msg.post("@render:", "use_camera_projection")
+	
 
 	msg.post("@render:", "clear_color", {color = vmath.vector4(0.5, 0.8, 0.9, 1)})
 	
@@ -38,6 +42,8 @@ function init(self)
 	self.anim = nil
 	self.score = 0
 	print("All self. variables declared")	
+
+	--msg.post(".", "contact_point_response")
 end
 
 local function clamp(value, min, max)
@@ -51,6 +57,27 @@ local function clamp(value, min, max)
 	end
 end
 
+local function play_animation(self, anim)
+	if self.anim ~= anim then
+		sprite.play_flipbook("#sprite", anim)
+		self.anim = anim
+	end
+end
+
+local function update_animations(self)
+	--Set facing direction
+	sprite.set_hflip("#sprite", self.facing_direction == 1)
+
+	--Playing animations based on conditions
+	if self.ground_contact == false then
+		play_animation(self, JUMP_ANIM)
+	elseif self.velocity.x == 0 then
+		play_animation(self, IDLE_ANIM)
+	else
+		play_animation(self, MOVE_ANIM)
+	end
+end
+
 function fixed_update(self, dt)
 	--Gravity
 	self.velocity.y = self.velocity.y + GRAVITY * dt
@@ -61,7 +88,10 @@ function fixed_update(self, dt)
 	pos = pos + self.velocity * dt
 	go.set_position(pos)
 
-	-- Reset state variables
+	--Animations
+	update_animations(self)
+
+	--Reset state variables
 	self.correction = vmath.vector3()
 	self.ground_contact = false
 end
@@ -89,11 +119,16 @@ local function handle_obstacle_contact(self, normal, distance)
 	end
 
 	--Ceiling collision
-	if normal.y < NORMAL_THRESHOLD then
+	if normal.y < -NORMAL_THRESHOLD then
 		self.velocity.y = 0
 	end
-	
-	
+	--Debugging code
+	if DEBUGGING then
+		print("handle_obstacle_contact called")
+		print("ground_contact =", self.ground_contact)
+		print("Normal Y:", normal.y)
+		print("Threshold:", NORMAL_THRESHOLD)
+	end
 end
 
 function on_message(self, message_id, message, sender)
