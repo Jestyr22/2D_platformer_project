@@ -1,0 +1,42 @@
+local function load_level(self, level_to_load)
+	if self.current_level ~= nil then
+		msg.post(self.current_level, "unload")
+	end
+
+	level_to_load = "#" .. level_to_load
+	self.current_level = level_to_load
+
+	msg.post(level_to_load, "load")	
+end
+
+local function reload_level(self)
+	self.reloading_level = true
+	msg.post(self.current_level, "disable")
+	msg.post(self.current_level, "final")
+	msg.post(self.current_level, "unload")
+end
+
+function init(self)
+	self.current_level = nil
+	self.reloading_level = false
+
+	msg.post(".", "acquire_input_focus")
+
+	load_level(self, "level1")
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("load_level") then
+		load_level(self, message.level)
+	elseif message_id == hash("reload_level") then
+		reload_level(self)
+	elseif message_id == hash("proxy_loaded") then
+		self.reloading_level = false
+		msg.post(sender, "init")
+		msg.post(sender, "enable")
+	elseif message_id == hash("proxy_unloaded") then
+		if self.reloading_level == true then
+			msg.post(self.current_level, "load")
+		end
+	end
+end

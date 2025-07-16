@@ -12,7 +12,7 @@ target_sdk_version = 35
 version_code = 1
 
 [bootstrap]
-main_collection = /game/levels/level1.collectionc
+main_collection = /game/game_controller.collectionc
 render = /builtins/render/default.renderc
 
 [collection]
