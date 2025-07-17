@@ -7,6 +7,43 @@ instances {
     y: 466.0
   }
 }
+instances {
+  id: "enemy"
+  prototype: "/game/entities/enemy.go"
+  position {
+    x: 374.0
+    y: 240.0
+  }
+  component_properties {
+    id: "enemy"
+    properties {
+      id: "move_direction"
+      value: "0.0, 1.0, 0.0"
+      type: PROPERTY_TYPE_VECTOR3
+    }
+  }
+}
+instances {
+  id: "enemy1"
+  prototype: "/game/entities/enemy.go"
+  position {
+    x: 531.0
+    y: 337.0
+  }
+  component_properties {
+    id: "enemy"
+    properties {
+      id: "move_direction"
+      value: "0.7, 0.0, 0.0"
+      type: PROPERTY_TYPE_VECTOR3
+    }
+    properties {
+      id: "is_bot"
+      value: "true"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "level"

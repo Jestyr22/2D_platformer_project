@@ -7,6 +7,12 @@ local function load_level(self, level_to_load)
 	self.current_level = level_to_load
 
 	msg.post(level_to_load, "load")	
+
+	--below is alternate code, as above may break with updates
+	
+	--local level_url = msg.url()(nil, nil, level_to_load)
+	--self.current_level = level_url
+	--msg.post(self.current_level, "load")
 end
 
 local function reload_level(self)
@@ -23,6 +29,7 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 
 	load_level(self, "level1")
+	
 end
 
 function on_message(self, message_id, message, sender)
