@@ -44,6 +44,30 @@ instances {
     }
   }
 }
+instances {
+  id: "coin"
+  prototype: "/game/entities/coin.go"
+  position {
+    x: 190.0
+    y: 298.0
+  }
+}
+instances {
+  id: "coin1"
+  prototype: "/game/entities/coin.go"
+  position {
+    x: 293.0
+    y: 250.0
+  }
+}
+instances {
+  id: "coin2"
+  prototype: "/game/entities/coin.go"
+  position {
+    x: 134.0
+    y: 297.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "level"

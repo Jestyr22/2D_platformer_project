@@ -5,19 +5,18 @@ local MAX_FALL_SPEED = 500
 local JUMP_SPEED = 300
 local NORMAL_THRESHOLD = 0.8
 
---Pre-Hash Declarations
+--On-Message Pre-Hash Declarations
 local MOVE_LEFT_INPUT = hash("move_left")
 local MOVE_RIGHT_INPUT = hash("move_right")
 local JUMP_INPUT = hash("move_jump")
+local CONTACT_POINT_RESPONSE = hash("contact_point_response")
+local GROUND_LAYER = hash("ground")
+local INCREASE_SCORE = hash("increase_score")
 
 --Player Animations
 local IDLE_ANIM = hash("player_idle")
 local MOVE_ANIM = hash("player_move")
 local JUMP_ANIM = hash("player_jump")
-
---On-Message Pre-Hash Declarations
-local CONTACT_POINT_RESPONSE = hash("contact_point_response")
-local GROUND_LAYER = hash("ground")
 
 --Debug Boolean
 local DEBUGGING = false
@@ -128,6 +127,7 @@ local function handle_obstacle_contact(self, normal, distance)
 		print("ground_contact =", self.ground_contact)
 		print("Normal Y:", normal.y)
 		print("Threshold:", NORMAL_THRESHOLD)
+		
 	end
 end
 
@@ -137,6 +137,11 @@ function on_message(self, message_id, message, sender)
 		if message.group == GROUND_LAYER then
 			handle_obstacle_contact(self, message.normal, message.distance)
 		end
+	--Coin collection
+	elseif message_id == INCREASE_SCORE then
+		self.score = self.score + message.amount
+		print("Score:", self.score)
+		
 	end
 end
 

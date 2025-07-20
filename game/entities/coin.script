@@ -1,0 +1,21 @@
+
+--Variable Declarations
+local FLOAT_SPEED = 5
+local FLOAT_HEIGHT = 5
+--On-Message Pre-Hash Declarations
+local TRIGGER_RESPONSE = hash("trigger_response")
+local PLAYER_GROUP = hash("player")
+
+function init(self)
+	local pos = go.get_position()
+	local to = pos.y + FLOAT_HEIGHT
+	local duration = FLOAT_HEIGHT / FLOAT_SPEED
+	go.animate(".", "position.y", go.PLAYBACK_LOOP_PINGPONG, to, go.EASING_INOUTSINE, duration)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == TRIGGER_RESPONSE and message.group == PLAYER_GROUP then
+		msg.post(message.other_id, "increase_score", { amount = 1 })
+		go.delete()
+	end
+end
