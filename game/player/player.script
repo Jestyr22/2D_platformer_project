@@ -141,7 +141,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == INCREASE_SCORE then
 		self.score = self.score + message.amount
 		print("Score:", self.score)
-		
+		msg.post("#player_hud", "update_score_text", {score = self.score})
 	end
 end
 

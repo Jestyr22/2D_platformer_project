@@ -1,0 +1,17 @@
+local UPDATE_SCORE_TEXT = hash("update_score_text")
+
+local function set_score_text(self, score)
+	local score_text = gui.get_node("score")
+	gui.set_text(score_text, "Score: " .. score)
+	
+end
+
+function init(self)
+	set_score_text(self, 0)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == UPDATE_SCORE_TEXT then
+		set_score_text(self, message.score)
+	end
+end

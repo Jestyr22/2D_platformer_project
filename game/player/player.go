@@ -2,6 +2,10 @@ components {
   id: "player"
   component: "/game/player/player.script"
 }
+components {
+  id: "player_hud"
+  component: "/game/player/player_hud.gui"
+}
 embedded_components {
   id: "sprite"
   type: "sprite"
