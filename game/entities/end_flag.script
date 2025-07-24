@@ -1,0 +1,10 @@
+go.property("next_level", hash("enter level_name")) 
+
+local TRIGGER_RESPONSE = hash("trigger_response")
+local PLAYER_GROUP = hash("player")
+
+function on_message(self, message_id, message, sender)
+	if message_id == TRIGGER_RESPONSE and message.group == PLAYER_GROUP then
+		msg.post("game_controller:/gc#game_controller", "load_level", { level = self.next_level })
+	end
+end

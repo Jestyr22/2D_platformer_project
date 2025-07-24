@@ -1,85 +1,64 @@
-name: "level1"
+name: "level2"
 instances {
   id: "player"
   prototype: "/game/player/player.go"
   position {
-    x: 56.0
-    y: 466.0
+    x: 59.0
+    y: 134.0
   }
 }
 instances {
   id: "enemy"
   prototype: "/game/entities/enemy.go"
   position {
-    x: 374.0
-    y: 240.0
-  }
-  component_properties {
-    id: "enemy"
-    properties {
-      id: "move_direction"
-      value: "0.0, 1.0, 0.0"
-      type: PROPERTY_TYPE_VECTOR3
-    }
-  }
-}
-instances {
-  id: "enemy1"
-  prototype: "/game/entities/enemy.go"
-  position {
-    x: 531.0
-    y: 337.0
-  }
-  component_properties {
-    id: "enemy"
-    properties {
-      id: "move_direction"
-      value: "0.7, 0.0, 0.0"
-      type: PROPERTY_TYPE_VECTOR3
-    }
-    properties {
-      id: "is_bot"
-      value: "true"
-      type: PROPERTY_TYPE_BOOLEAN
-    }
+    x: 180.0
+    y: 119.0
   }
 }
 instances {
   id: "coin"
   prototype: "/game/entities/coin.go"
   position {
-    x: 190.0
-    y: 298.0
+    x: 229.0
+    y: 83.0
   }
 }
 instances {
   id: "coin1"
   prototype: "/game/entities/coin.go"
   position {
-    x: 293.0
-    y: 250.0
+    x: 249.0
+    y: 83.0
   }
 }
 instances {
   id: "coin2"
   prototype: "/game/entities/coin.go"
   position {
-    x: 134.0
-    y: 297.0
+    x: 268.0
+    y: 83.0
+  }
+}
+instances {
+  id: "coin3"
+  prototype: "/game/entities/coin.go"
+  position {
+    x: 287.0
+    y: 83.0
   }
 }
 instances {
   id: "end_flag"
   prototype: "/game/entities/end_flag.go"
   position {
-    x: 166.0
-    y: 318.0
+    x: 421.0
+    y: 78.0
   }
   component_properties {
     id: "end_flag"
     properties {
       id: "next_level"
-      value: "level2"
+      value: "level1"
       type: PROPERTY_TYPE_HASH
     }
   }
@@ -88,13 +67,13 @@ scale_along_z: 0
 embedded_instances {
   id: "level"
   data: "components {\n"
-  "  id: \"level1_tilemap\"\n"
-  "  component: \"/game/levels/level1_tilemap.tilemap\"\n"
+  "  id: \"level2_tilemap\"\n"
+  "  component: \"/game/levels/level2_tilemap.tilemap\"\n"
   "}\n"
   "embedded_components {\n"
   "  id: \"collisionobject\"\n"
   "  type: \"collisionobject\"\n"
-  "  data: \"collision_shape: \\\"/game/levels/level1_tilemap.tilemap\\\"\\n"
+  "  data: \"collision_shape: \\\"/game/levels/level2_tilemap.tilemap\\\"\\n"
   "type: COLLISION_OBJECT_TYPE_STATIC\\n"
   "mass: 0.0\\n"
   "friction: 0.1\\n"
@@ -104,8 +83,4 @@ embedded_instances {
   "\"\n"
   "}\n"
   ""
-}
-embedded_instances {
-  id: "go"
-  data: ""
 }

@@ -93,6 +93,11 @@ function fixed_update(self, dt)
 	--Reset state variables
 	self.correction = vmath.vector3()
 	self.ground_contact = false
+
+	--Check if fallen off map
+	if pos.y < -100 then
+		msg.post("game_controller:/gc#game_controller", "reload_level")
+	end
 end
 
 local function handle_obstacle_contact(self, normal, distance)
