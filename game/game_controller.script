@@ -28,7 +28,7 @@ function init(self)
 
 	msg.post(".", "acquire_input_focus")
 
-	load_level(self, "level1")
+	load_level(self, "menu")
 	
 end
 

@@ -1,0 +1,98 @@
+script: "/game/levels/menu_gui.gui_script"
+fonts {
+  name: "default"
+  font: "/builtins/fonts/default.font"
+}
+nodes {
+  position {
+    x: 298.0
+    y: 483.0
+  }
+  scale {
+    x: 2.140081
+    y: 2.172254
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "2D Platformer Game! (Made by Bas)\n"
+  ""
+  font: "default"
+  id: "title"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 527.0
+    y: 297.0
+  }
+  scale {
+    x: 1.372638
+    y: 0.888325
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.502
+    y: 0.0
+    z: 0.502
+  }
+  type: TYPE_BOX
+  id: "play_button"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "PLAY"
+  font: "default"
+  id: "play_button_text"
+  parent: "play_button"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 571.0
+    y: 175.0
+  }
+  scale {
+    x: 1.372638
+    y: 0.888325
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.502
+    y: 0.0
+    z: 0.502
+  }
+  type: TYPE_BOX
+  id: "quit_button"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "quit\n"
+  ""
+  font: "default"
+  id: "quit_button_text"
+  parent: "quit_button"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

@@ -147,6 +147,7 @@ function on_message(self, message_id, message, sender)
 		self.score = self.score + message.amount
 		print("Score:", self.score)
 		msg.post("#player_hud", "update_score_text", {score = self.score})
+		sound.play("#sound_coin")
 	end
 end
 
@@ -164,7 +165,7 @@ local function jump(self)
 	end
 	self.velocity.y = JUMP_SPEED
 	self.ground_contact = false
-	
+	sound.play("#sound_jump")
 end
 
 function on_input(self, action_id, action)

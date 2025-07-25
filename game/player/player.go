@@ -56,3 +56,15 @@ embedded_components {
   "orthographic_zoom: 3.0\n"
   ""
 }
+embedded_components {
+  id: "sound_jump"
+  type: "sound"
+  data: "sound: \"/assets/audio/jump.ogg\"\n"
+  ""
+}
+embedded_components {
+  id: "sound_coin"
+  type: "sound"
+  data: "sound: \"/assets/audio/coin.ogg\"\n"
+  ""
+}
